@@ -18,9 +18,6 @@ First Addition        28/8/2020
                      * AFIO
                      * EXTI
   To be modified nearly:-
-            - LIB\ 
-                    * STD_TYPES
-                    * BIT_MATH
             - MCAL\
                     * SysTick
                     * GPIO
