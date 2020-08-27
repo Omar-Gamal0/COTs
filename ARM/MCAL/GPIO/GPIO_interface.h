@@ -81,7 +81,7 @@
 /*************************/
 
 
-/***************************Functions***************************/
+/* Global functions */
 
 /* GPIO_voidPORTA_Init --> Enables clock for PortA, sets all pins' outputs of PortA to low  */
 /* I/P:- void 				 																*/
@@ -107,7 +107,6 @@ void GPIO_voidPORTC_Init(void);
 /************************************************************************************************************************/
 void GPIO_voidAllPortsInit(void);
 
-
 /* GPIO_voidSetPinVal --> Sets output value of wanted pin 				*/
 /* I/P:- Cpy_u8Port:- Port / Available options:- GPIO_U8_PORTA
 												 GPIO_U8_PORTB
@@ -131,8 +130,32 @@ void GPIO_voidAllPortsInit(void);
   		 Cpy_u8PinVal:- Pin Value / Available options:- GPIO_U8_HIGH
 														GPIO_U8_LOW		*/
 /* O/P:- void						 		   							*/
-/************************************************************************/
 void GPIO_voidSetPinVal(u8 Cpy_u8Port,u8 Cpy_u8PinNum, u8 Cpy_u8PinVal);
+/************************************************************************/
+
+/* GPIO_voidTogPinVal --> Toggles output value of wanted pin 			*/
+/* I/P:- Cpy_u8Port:- Port / Available options:- GPIO_U8_PORTA
+												 GPIO_U8_PORTB
+												 GPIO_U8_PORTC
+  		 Cpy_u8PinNum:- Pin Number / Available options:- GPIO_U8_PIN0
+														 GPIO_U8_PIN1
+														 GPIO_U8_PIN2
+														 GPIO_U8_PIN3
+														 GPIO_U8_PIN4
+														 GPIO_U8_PIN5
+														 GPIO_U8_PIN6
+														 GPIO_U8_PIN7
+														 GPIO_U8_PIN8
+														 GPIO_U8_PIN9
+														 GPIO_U8_PIN10
+														 GPIO_U8_PIN11
+														 GPIO_U8_PIN12
+														 GPIO_U8_PIN13
+														 GPIO_U8_PIN14
+														 GPIO_U8_PIN15	*/
+/* O/P:- void						 		   							*/
+void GPIO_voidTogPinVal(u8 Cpy_u8Port,u8 Cpy_u8PinNum);
+/************************************************************************/
 
 /* GPIO_u8GetPinVal --> Returns input value of wanted pin 			  */
 /* I/P:- Cpy_u8Port:- Port / Available options:- GPIO_U8_PORTA
@@ -157,8 +180,8 @@ void GPIO_voidSetPinVal(u8 Cpy_u8Port,u8 Cpy_u8PinNum, u8 Cpy_u8PinVal);
   		 Cpy_u8PinVal:- Pin Value / Available options:- GPIO_U8_HIGH
 														GPIO_U8_LOW		*/
 /* O/P:- Temp_u8PinVal:- Input value of the corresponding pin (0 or 1)	*/
-/************************************************************************/
 u8 GPIO_u8GetPinVal(u8 Cpy_u8Port,u8 Cpy_u8PinNum);
+/************************************************************************/
 
 /* GPIO_voidSetPinMode --> Sets wanted pin Mode 																			*/
 /* I/P:- Cpy_u8Port:- Port / Available options:- GPIO_U8_PORTA
@@ -189,8 +212,8 @@ u8 GPIO_u8GetPinVal(u8 Cpy_u8Port,u8 Cpy_u8PinNum);
 																					  GPIO_U8_OUTPUT_MODE_AF_PP				// Alternate function output Push-pull
 																					  GPIO_U8_OUTPUT_MODE_AF_OD			*/	// Alternate function output Open-drain
 /* O/P:- void						 		  																			*/
-/************************************************************************************************************************/
 void GPIO_voidSetPinMode(u8 Cpy_u8Port, u8 Cpy_u8PinNum, u8 Cpy_u8PinConfig, u8 Cpy_u8PinOutputMode);
+/************************************************************************************************************************/
 
 /* GPIO_voidSetPinPullingState --> Sets wanted pin Pulling state (Up or Down) 		*/
 /* I/P:- Cpy_u8Port:- Port / Available options:- GPIO_U8_PORTA
@@ -215,7 +238,9 @@ void GPIO_voidSetPinMode(u8 Cpy_u8Port, u8 Cpy_u8PinNum, u8 Cpy_u8PinConfig, u8 
 		Cpy_u8PullingState:- GPIO_U8_PULL_UP
 							 GPIO_U8_PULL_DOWN
 														 	 	 	 	 	 	 	*/
+/* O/P: void 																		*/
 void GPIO_voidSetPinPullingState(u8 Cpy_u8Port, u8 Cpy_u8PinNum, u8 Cpy_u8PullingState);
+/************************************************************************************/
 
 /* GPIO_PinLock --> Locks a specific pin Mode 								*/
 /* I/P:- Cpy_u8Port:- Port / Available options:- GPIO_U8_PORTA
@@ -238,18 +263,17 @@ void GPIO_voidSetPinPullingState(u8 Cpy_u8Port, u8 Cpy_u8PinNum, u8 Cpy_u8Pullin
 														 GPIOU8__PIN14
 														 GPIOU8__PIN15		*/
 /* O/P:- void																*/
-/****************************************************************************/
 void GPIO_voidPinLock(u8 Cpy_u8Port, u8 Cpy_u8PinNum);
+/****************************************************************************/
 
 /* GPIO_PortLock --> Locks all pins Modes of a specific port	 			*/
 /* I/P:- Cpy_u8Port:- Port / Available options:- GPIO_U8_PORTA
 												 GPIO_U8_PORTB
 												 GPIO_U8_PORTC				*/
 /* O/P:- void																*/
-/****************************************************************************/
 void GPIO_voidPortLock(u8 Cpy_u8Port);
-/***************************************************************/
+/****************************************************************************/
 
-
+/********************/
 
 #endif

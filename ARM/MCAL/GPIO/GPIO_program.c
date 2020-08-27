@@ -80,6 +80,29 @@ void GPIO_voidSetPinVal(u8 Cpy_u8Port, u8 Cpy_u8PinNum, u8 Cpy_u8PinVal) { /* Se
 	}
 }
 
+void GPIO_voidTogPinVal(u8 Cpy_u8Port,u8 Cpy_u8PinNum)
+{
+	
+	switch (Cpy_u8Port) {
+
+	case GPIO_U8_PORTA:
+		
+		TOG_BIT(GPIO_GPIOA_ODR, Cpy_u8PinNum);
+
+		break;
+	case GPIO_U8_PORTB:
+
+	TOG_BIT(GPIO_GPIOB_ODR, Cpy_u8PinNum);
+
+		break;
+	case GPIO_U8_PORTC:
+
+		TOG_BIT(GPIO_GPIOC_ODR, Cpy_u8PinNum);
+		
+		break;
+	}
+}
+
 u8 GPIO_u8GetPinVal(u8 Cpy_u8Port, u8 Cpy_u8PinNum) { /* Returns input value of wanted pin */
 	u8 Loc_u8PinValue = 0;
 	switch (Cpy_u8Port) {
@@ -175,13 +198,21 @@ void GPIO_voidSetPinPullingState(u8 Cpy_u8Port, u8 Cpy_u8PinNum,
 }
 
 void GPIO_voidPinLock(u8 Cpy_u8Port, u8 Cpy_u8PinNum) { 				/* Locks a specific pin Mode */
-	CLR_BIT(GPIO_GPIOA_LCKR, 16);
+
+	u32 Loc_u32temp = 0x00010000;
+	Loc_u32temp |= (1 << Cpy_u8PinNum);
+
 	switch (Cpy_u8Port) {
 
 	case GPIO_U8_PORTA:
 
 		if (Cpy_u8PinNum < 16) {
-			SET_BIT(GPIO_GPIOA_LCKR, Cpy_u8PinNum);
+
+			GPIO_GPIOA_LCKR = Loc_u32temp;
+			GPIO_GPIOA_LCKR = (1 << Cpy_u8PinNum);
+			GPIO_GPIOA_LCKR = Loc_u32temp;
+			Loc_u32temp = GPIO_GPIOA_LCKR;
+			Loc_u32temp = GPIO_GPIOA_LCKR;
 		} else {
 
 		}
@@ -190,7 +221,11 @@ void GPIO_voidPinLock(u8 Cpy_u8Port, u8 Cpy_u8PinNum) { 				/* Locks a specific 
 	case GPIO_U8_PORTB:
 
 		if (Cpy_u8PinNum < 16) {
-			SET_BIT(GPIO_GPIOB_LCKR, Cpy_u8PinNum);
+			GPIO_GPIOB_LCKR = Loc_u32temp;
+			GPIO_GPIOB_LCKR = (1 << Cpy_u8PinNum);
+			GPIO_GPIOB_LCKR = Loc_u32temp;
+			Loc_u32temp = GPIO_GPIOB_LCKR;
+			Loc_u32temp = GPIO_GPIOB_LCKR;
 		} else {
 
 		}
@@ -199,47 +234,57 @@ void GPIO_voidPinLock(u8 Cpy_u8Port, u8 Cpy_u8PinNum) { 				/* Locks a specific 
 	case GPIO_U8_PORTC:
 
 		if (Cpy_u8PinNum < 16) {
-			SET_BIT(GPIO_GPIOC_LCKR, Cpy_u8PinNum);
+			GPIO_GPIOC_LCKR = Loc_u32temp;
+			GPIO_GPIOC_LCKR = (1 << Cpy_u8PinNum);
+			GPIO_GPIOC_LCKR = Loc_u32temp;
+			Loc_u32temp = GPIO_GPIOC_LCKR;
+			Loc_u32temp = GPIO_GPIOC_LCKR;
 		} else {
 
 		}
 		break;
 
 	}
-	GPIO_voidLockSequence();
 
 }
 
 void GPIO_voidPortLock(u8 Cpy_u8Port) {										/* Locks all pins Modes of a specific port */
 
-	CLR_BIT(GPIO_GPIOA_LCKR, 16);
+	u32 Loc_u32LckVal;
+
 	switch (Cpy_u8Port) {
 
-	case GPIO_U8_PORTA:
+		case GPIO_U8_PORTA:
+			GPIO_GPIOA_LCKR = 0x1FFFF;
+			GPIO_GPIOA_LCKR = 0xFFFF;
+			GPIO_GPIOA_LCKR = 0x1FFFF;
+			Loc_u32LckVal = GPIO_GPIOA_LCKR;
+			Loc_u32LckVal = GPIO_GPIOA_LCKR;
 
-		GPIO_GPIOA_LCKR = 0x0F;
-		break;
+			break;
 
-	case GPIO_U8_PORTB:
+		case GPIO_U8_PORTB:
 
-		GPIO_GPIOB_LCKR = 0x0F;
-		break;
+			GPIO_GPIOB_LCKR = 0x0FFFF;
+			GPIO_GPIOB_LCKR = 0x1FFFF;
+			GPIO_GPIOB_LCKR = 0x0FFFF;
+			GPIO_GPIOB_LCKR = 0x1FFFF;
+			Loc_u32LckVal = GPIO_GPIOB_LCKR;
+			Loc_u32LckVal = GPIO_GPIOB_LCKR;
 
-	case GPIO_U8_PORTC:
+			break;
 
-		GPIO_GPIOC_LCKR = 0x0F;
-		break;
+		case GPIO_U8_PORTC:
 
-	}
-	GPIO_voidLockSequence();
-}
+			GPIO_GPIOC_LCKR = 0x0FFFF;
+			GPIO_GPIOC_LCKR = 0x1FFFF;
+			GPIO_GPIOC_LCKR = 0x0FFFF;
+			GPIO_GPIOC_LCKR = 0x1FFFF;
+			Loc_u32LckVal = GPIO_GPIOC_LCKR;
+			Loc_u32LckVal = GPIO_GPIOC_LCKR;
 
-void GPIO_voidLockSequence(void) {											/* LOCK key writing sequence */
+			break;
 
-	u8 Temp_u8BitVal = 0;
-	SET_BIT(GPIO_GPIOA_LCKR, 16);
-	CLR_BIT(GPIO_GPIOA_LCKR, 16);
-	SET_BIT(GPIO_GPIOA_LCKR, 16);
-	Temp_u8BitVal = GET_BIT(GPIO_GPIOA_LCKR, 16);
-	Temp_u8BitVal = GET_BIT(GPIO_GPIOA_LCKR, 16);
+		}
+
 }

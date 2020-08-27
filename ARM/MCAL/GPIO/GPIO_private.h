@@ -58,11 +58,6 @@
 
 /* Private Functions */
 
-/* GPIO_voidLockSequence --> LOCK key writing sequence 	*/
-/* I/P:- void									 		*/
-/* O/P:- void									 		*/
-/********************************************************/
-void GPIO_voidLockSequence(void);
 /*********************/
 
 #endif
