@@ -22,9 +22,10 @@ typedef struct {
 /*************************************************************/
 
 /* PRIVATE variables */
-u8 MSTK_u8TmrUnderFlowFlg = 0;			/* Variable that stores state of STK underflow bit flag */
+u8 STK_u8PvtIntervalState = 0;
 /*********************/
 
+void (* CallBack)(void);				/* Pointer to function to be used as call back function */
 
 /************************/
 

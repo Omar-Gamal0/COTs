@@ -65,9 +65,73 @@ void MSTK_voidSetBusyWait(u32 Cpy_u32DelayVal, u8 Cpy_u8ValueType, void (*func)(
 
 }
 
+void MSTK_voidSetSingleInterval(u32 Cpy_u32DelayVal, u8 Cpy_u8ValueType, void (*func)(void)){
+	
+	STK_u8PvtIntervalState = STK_U8_SINGLE_INTERVAL;
+	switch(Cpy_u8ValueType){
+		case STK_U8_TICKS:																	break;		
+		case STK_U8_MICROS:		Cpy_u32DelayVal *= (STK_CLK/STK_U8_MICROS_DIVIDER);			break;		
+		case STK_U8_MILLIS:		Cpy_u32DelayVal *= (STK_CLK/STK_U8_MILLIS_DIVIDER);			break;
+		case STK_U8_SECONDS:	Cpy_u32DelayVal *= (STK_CLK);								break;
+	}
+		MSTK_voidTICKInterrupt(STK_U8_TICKINT_EN);
+		STK->VAL = 0x00;
+		MSTK_voidLoadVal(Cpy_u32DelayVal);
+		MSTK_voidCounterEnDis(STK_U8_COUNTER_EN);
+			
+	CallBack = func;
+
+}
+
+void MSTK_voidSetPeriodicInterval(u32 Cpy_u32DelayVal, u8 Cpy_u8ValueType, void (*func)(void)){
+	STK_u8PvtIntervalState = STK_U8_PERIODIC_INTERVAL;
+	switch(Cpy_u8ValueType){
+		case STK_U8_TICKS:																	break;
+		case STK_U8_MICROS:		Cpy_u32DelayVal *= (STK_CLK/STK_U8_MICROS_DIVIDER);			break;
+		case STK_U8_MILLIS:		Cpy_u32DelayVal *= (STK_CLK/STK_U8_MILLIS_DIVIDER);			break;
+		case STK_U8_SECONDS:	Cpy_u32DelayVal *= (STK_CLK);								break;
+	}
+		MSTK_voidTICKInterrupt(STK_U8_TICKINT_EN);
+		STK->VAL = 0x00;
+		MSTK_voidLoadVal(Cpy_u32DelayVal);
+		MSTK_voidCounterEnDis(STK_U8_COUNTER_EN);
+
+	CallBack = func;
+
+}
+
+u32 MSTK_u32GetElapsedTime(u8 Cpy_u8TimeType){
+	switch(Cpy_u8TimeType){
+		case STK_U8_TICKS:		return ((STK->LOAD) - (STK->VAL));												break;
+		case STK_U8_MICROS:		return (((STK->LOAD) - (STK->VAL)) / (STK_CLK/STK_U8_MICROS_DIVIDER));			break;
+		case STK_U8_MILLIS:		return (((STK->LOAD) - (STK->VAL)) / (STK_CLK/STK_U8_MILLIS_DIVIDER));			break;
+		case STK_U8_SECONDS:	return (((STK->LOAD) - (STK->VAL)) / (STK_CLK));								break;
+	}
+}
+
+u32 MSTK_u32GetRemainingTime(u8 Cpy_u8TimeType){
+	switch(Cpy_u8TimeType){
+		case STK_U8_TICKS:		return (STK->VAL);												break;
+		case STK_U8_MICROS:		return ((STK->VAL) / (STK_CLK/STK_U8_MICROS_DIVIDER));			break;
+		case STK_U8_MILLIS:		return ((STK->VAL) / (STK_CLK/STK_U8_MILLIS_DIVIDER));			break;
+		case STK_U8_SECONDS:	return ((STK->VAL) / (STK_CLK));								break;
+	}
+}
+
+void MSTK_voidStopTimer(void){
+	MSTK_voidCounterEnDis(STK_U8_COUNTER_DIS);
+}
 
 void SysTick_Handler(void){
-	MSTK_voidCounterEnDis(STK_U8_COUNTER_DIS);
+	CallBack();
+	switch(STK_u8PvtIntervalState){
+	case STK_U8_SINGLE_INTERVAL:
+		MSTK_voidCounterEnDis(STK_U8_COUNTER_DIS);
+		break;
+	case STK_U8_PERIODIC_INTERVAL:
+		//MSTK_voidCounterEnDis(STK_U8_COUNTER_EN);			/* Already enabled in the MSTK_voidSetPeriodicInterval function */
+		break;
+	}
 }
 
 /********************/

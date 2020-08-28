@@ -52,7 +52,6 @@
 
 /*****************************************/
 
-
 /* Wait value type Macros */
 #define STK_U8_TICKS 					0		
 #define STK_U8_MILLIS 					1
@@ -65,6 +64,10 @@
 #define STK_U8_MICROS_DIVIDER			1000000	/* Value used to calculate Load value in the wait functions when the wait value is in microseconds */
 /*****************************/
 
+/* Interval Macros definitions */
+#define STK_U8_SINGLE_INTERVAL			0
+#define STK_U8_PERIODIC_INTERVAL		1
+/*******************************/
 
 /**************************/
 
@@ -110,7 +113,7 @@ u32 MSTK_u32CurrentVal(void);
 
 
 
-/* MSTK_voidSetBusyWait: Starts a busy wait for a certain time determined by the arguments 	*/
+/* MSTK_voidSetBusyWait: Starts a busy wait for a certain time determined by the arguments before calling the callback function	*/
 /* I/P: - 	Cpy_u32DelayVal:	* Value of delay needed to be done
 								* Type: u32
 								* Available options: 1 : (2^32)
@@ -121,10 +124,90 @@ u32 MSTK_u32CurrentVal(void);
 														- STK_U8_TICKS
 														- STK_U8_MILLIS
 														- STK_U8_MICROS
-														- STK_U8_SECONDS					*/
+														- STK_U8_SECONDS
+			(*func)(void): 		* Function to be which is to be called back after the busy wait
+								* Return type: void
+								* Available functions:
+								* 				- Functions that have (void return type && void parameters)
+																							*/
 /* O/P: void 																				*/
 void MSTK_voidSetBusyWait(u32 Cpy_u32DelayVal, u8 Cpy_u8ValueType, void (*func)(void));
 /********************************************************************************************/
+
+/* MSTK_voidSetSingleInterval: Starts a single interval for a certain time determined by the arguments before calling the callback function */
+/* I/P: - 	Cpy_u32DelayVal:	* Value of delay needed to be done
+								* Type: u32
+								* Available options: 1 : (2^32)
+
+			Cpy_u8ValueType: 	* Type of delay value
+								* Type: u8
+								* Available options:
+														- STK_U8_TICKS
+														- STK_U8_MILLIS
+														- STK_U8_MICROS
+														- STK_U8_SECONDS
+			(*func)(void): 		* Function to be which is to be called back after the busy wait
+								* Return type: void
+								* Available functions:
+								* 				- Functions that have (void return type && void parameters)
+																							*/
+/* O/P: void 																				*/
+void MSTK_voidSetSingleInterval(u32 Cpy_u32DelayVal, u8 Cpy_u8ValueType, void (*func)(void));
+/********************************************************************************************/
+
+/* MSTK_voidSetPeriodicInterval: Starts a periodic interval for a certain time determined by the arguments before calling the callback function */
+/* I/P: - 	Cpy_u32DelayVal:	* Value of delay needed to be done
+								* Type: u32
+								* Available options: 1 : (2^32)
+
+			Cpy_u8ValueType: 	* Type of delay value
+								* Type: u8
+								* Available options:
+														- STK_U8_TICKS
+														- STK_U8_MILLIS
+														- STK_U8_MICROS
+														- STK_U8_SECONDS
+			(*func)(void): 		* Function to be which is to be called back after the busy wait
+								* Return type: void
+								* Available functions:
+								* 				- Functions that have (void return type && void parameters)
+																							*/
+/* O/P: void 																				*/
+void MSTK_voidSetPeriodicInterval(u32 Cpy_u32DelayVal, u8 Cpy_u8ValueType, void (*func)(void));
+/********************************************************************************************/
+
+/* MSTK_voidStopTimer:- Disables the STK timer which stops the periodic interval 	*/
+/* I/P: void 																		*/
+/* O/P: void 																		*/
+void MSTK_voidStopTimer(void);
+/************************************************************************************/
+
+/* MSTK_u32GetElapsedTime: Returns Elapsed time since start of current interval */
+/* I/P: - 	Cpy_u8ValueType: 	* Type of return value of time
+								* Type: u8
+								* Available options:
+														- STK_U8_TICKS
+														- STK_U8_MILLIS
+														- STK_U8_MICROS
+														- STK_U8_SECONDS
+																				*/
+/* O/P: void 																	*/
+u32 MSTK_u32GetElapsedTime(u8 Cpy_u8TimeType);
+/********************************************************************************/
+
+/* MSTK_u32GetRemainingTime: Returns remaining time of current interval		*/
+/* I/P: - 	Cpy_u8ValueType: 	* Type of return value of time
+								* Type: u8
+								* Available options:
+														- STK_U8_TICKS
+														- STK_U8_MILLIS
+														- STK_U8_MICROS
+														- STK_U8_SECONDS
+																			*/
+/* O/P: void 																*/
+u32 MSTK_u32GetRemainingTime(u8 Cpy_u8TimeType);
+/****************************************************************************/
+
 /********************/
 
 /********************/
