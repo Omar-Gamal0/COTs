@@ -72,3 +72,13 @@ void MEXTI_voidClrPR(u8 Cpy_u8Line)
 {
 	SET_BIT((EXTI -> PR) , Cpy_u8Line);
 }
+
+void MEXTI_voidSetCallBack(void (*ptr_Func)(void), u8 Cpy_u8Line){
+	CallBack[Cpy_u8Line] = ptr_Func;
+}
+
+void EXTI0_IRQHandler(void){
+	CallBack[0]();
+	MEXTI_voidClrPR(0);
+
+}

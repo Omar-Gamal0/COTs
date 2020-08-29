@@ -22,5 +22,6 @@ typedef struct{
 
 #define EXTI 				((volatile EXTI_t*) 0x40010400)
 
+void (*CallBack[16])(void) = NULL;
 
 #endif

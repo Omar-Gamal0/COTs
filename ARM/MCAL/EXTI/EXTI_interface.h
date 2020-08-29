@@ -107,6 +107,17 @@ u8 MEXTI_u8GetPR(u8 Cpy_u8Line);
 void MEXTI_voidClrPR(u8 Cpy_u8Line);
 /********************************************************************************************/
 
+/* MEXTI_voidSetCallBack: Clears corresponding pending bit in EXTI_PR								*/
+/* I/P:	- 	ptr_Func:	* Pointer to function needed to be set fr callback in the EXTI ISR
+						* Type: pointer to function (void return type, void arguments)
+						
+			Cpy_u8Line:	* EXTI line for which the configuration is to be done(line to be initialized)
+						* Type: u8
+						* Available options: 0 : 15
+																							*/
+/* O/P: void 																				*/
+void MEXTI_voidSetCallBack(void (*ptr_Func)(void), u8 Cpy_u8Line);
+
 /********************/
 
 #endif
