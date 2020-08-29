@@ -148,12 +148,12 @@ u8 Cpy_u8PinOutputMode) {
 		if (Cpy_u8PinNum <= 7) {
 
 			GPIO_GPIOB_CRL &= ~(u32) ((0b1111) << (Cpy_u8PinNum * 4));
-			GPIO_GPIOA_CRL |= (u32) ((Cpy_u8PinMode) << (Cpy_u8PinNum * 4));
+			GPIO_GPIOB_CRL |= (u32) ((Cpy_u8PinMode) << (Cpy_u8PinNum * 4));
 
 		} else if (Cpy_u8PinNum <= 15) {
 
 			GPIO_GPIOB_CRH &= ~(u32) ((0b1111) << ((Cpy_u8PinNum - 8) * 4));
-			GPIO_GPIOA_CRH |= (u32) ((Cpy_u8PinMode) << (Cpy_u8PinNum * 4));
+			GPIO_GPIOB_CRH |= (u32) ((Cpy_u8PinMode) << (Cpy_u8PinNum * 4));
 
 		} else {
 
@@ -164,12 +164,12 @@ u8 Cpy_u8PinOutputMode) {
 		if (Cpy_u8PinNum <= 7) {
 
 			GPIO_GPIOC_CRL &= ~(u32) ((0b1111) << (Cpy_u8PinNum * 4));
-			GPIO_GPIOA_CRL |= (u32) ((Cpy_u8PinMode) << (Cpy_u8PinNum * 4));
+			GPIO_GPIOC_CRL |= (u32) ((Cpy_u8PinMode) << (Cpy_u8PinNum * 4));
 
 		} else if (Cpy_u8PinNum <= 15) {
 
 			GPIO_GPIOC_CRH &= ~(u32) ((0b1111) << ((Cpy_u8PinNum - 8) * 4));
-			GPIO_GPIOA_CRH |= (u32) ((Cpy_u8PinMode) << (Cpy_u8PinNum * 4));
+			GPIO_GPIOC_CRH |= (u32) ((Cpy_u8PinMode) << (Cpy_u8PinNum * 4));
 
 		} else {
 
