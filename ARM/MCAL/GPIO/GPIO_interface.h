@@ -7,6 +7,13 @@
 #ifndef _GPIO_INTERFACE_H
 #define _GPIO_INTERFACE_H
 
+/* Defining Pin struct */
+typedef struct{
+	u8 Port;
+	u8 Pin;
+}MGPIO_Pin_def_t;
+/***********************/
+
 /* General Purpose Macros*/
 
 /* Voltage State */
