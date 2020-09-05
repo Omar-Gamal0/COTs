@@ -9,7 +9,7 @@
 #define SET_BIT(VAR,BIT)		VAR |= ( 1<<(BIT) )
 #define CLR_BIT(VAR,BIT)		VAR &= ~( 1<<(BIT) )
 #define GET_BIT(VAR,BIT)		( VAR>>(BIT) ) & 1
-#define TOG_BIT(VAR,BIT)        VAR ^= ( VAR<<(BIT) )
+#define TOG_BIT(VAR,BIT)        VAR ^= ( 1<<(BIT) )
 
 
 #define BIT_CONC_PIN(A1,A0)	  CONC_HELP_PIN(A1,A0)
