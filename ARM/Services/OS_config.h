@@ -7,7 +7,7 @@
 #ifndef OS_CONFIG_H
 #define OS_CONFIG_H
 
-#define OS_U8_NUMBER_OF_TASKS				3
+#define OS_U8_NUMBER_OF_TASKS				4
 
 
 

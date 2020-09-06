@@ -9,13 +9,13 @@
 
 
 typedef struct{
-	u16 Priodicity;
-	void (*Fptr)(void);
-	u8 State;
-	u16 InitialDelay;
-}Task;
+	u16 Periodicity;						// Periodicity of the task
+	void (*Fptr)(void);						// Address of the function of the task
+	u8 State;								// Current state of the task (Suspended or ready)
+	u16 InitialDelay;						// InitialDelay of the task
+}Task;										// defining Task struct data type
 
 
-#define NULL		((void *)(0))
+#define NULL		((void *)(0))			// Defining the NULL macro
 
 #endif
