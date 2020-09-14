@@ -14,7 +14,7 @@
  * 						STK_U8_CLKSOURCE_AHB			*/
 #define STK_U8_CLKSOURCE				STK_U8_CLKSOURCE_AHB_8
 
-#define STK_AHB_CLK						8000000 		/* Clock frequency of AHB */
+#define STK_AHB_CLK						72000000 		/* Clock frequency of AHB */
 
 
 #endif

@@ -28,6 +28,6 @@ typedef struct{
 
 }DAC_def_t;
 
-
+f32 DAC_f32InputStepSize;
 
 #endif /* DAC_PRIVATE_H_ */

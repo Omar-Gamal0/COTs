@@ -6,7 +6,7 @@
 #ifndef _RCC_CONFIG_H
 #define _RCC_CONFIG_H
 
-#define SW_VAL 					SW_HSI 				// Selects the wanted SYSCLK source. 
+#define SW_VAL 					SW_PLL 				// Selects the wanted SYSCLK source.
 
 /* Internal High-Speed clock config */
 
@@ -24,9 +24,9 @@
 
 /* Phase-locked loop config */
 
-#define PLLSRC_VAL 				PLLSRC_HSI			// Selects the PLL entry clock source.
+#define PLLSRC_VAL 				PLLSRC_HSE			// Selects the PLL entry clock source.
 #define PLLXTPRE_VAL			PLLXTPRE_ON			// Selects the state of HSE divider for PLL entry.
-#define PLLMUL_VAL 				PLLMUL_X2   		// Selects the value of PLL multiplication factor.
+#define PLLMUL_VAL 				PLLMUL_X9   		// Selects the value of PLL multiplication factor.
 
 /****************************/
 
