@@ -102,6 +102,7 @@ void I2C_voidMasterSendData(u8 I2Cx, u8 * pTxBuffer, u8 Len, u8 SlaveAdd)
 {
 	I2C_RegDef_t * pI2Cx = I2C_GetBaseAdd(I2Cx);
 
+//	pI2Cx->SR1 = 0;
 	/* wait until the shift register , data register are empty after transmitting all the data (BTF = 1) */
 	while(GET_BIT(pI2Cx->SR1, I2C_SR2_BUSY));
 
@@ -148,10 +149,13 @@ void I2C_voidMasterSendData(u8 I2Cx, u8 * pTxBuffer, u8 Len, u8 SlaveAdd)
  */
 void I2C_voidMasterReceiveData(u8 I2Cx, u8 * pTxBuffer, u8 Len, u8 SlaveAdd)
 {
+
 	I2C_RegDef_t * pI2Cx = I2C_GetBaseAdd(I2Cx);
 
+
+//	pI2Cx->SR1 = 0;
 	/* wait until the shift register , data register are empty after transmitting all the data (BTF = 1) */
-	while(GET_BIT(pI2Cx->SR1, I2C_SR2_BUSY));
+	//while(GET_BIT(pI2Cx->SR1, I2C_SR2_BUSY));
 
 	/* Start generation condition */
 	I2C_VOID_SEND_START_CONDITION(pI2Cx);
@@ -191,7 +195,7 @@ void I2C_voidMasterReceiveData(u8 I2Cx, u8 * pTxBuffer, u8 Len, u8 SlaveAdd)
 		for(u8 i = 0; i < Len-1; i++)
 		{
 		/* Check if data register is not empty (RxNE bit in SR1 register = 1) */
-		while(! GET_BIT(pI2Cx->SR1, I2C_SR1_RXNE));
+		while( (! GET_BIT(pI2Cx->SR1, I2C_SR1_RXNE)) && (! GET_BIT(pI2Cx->SR1, I2C_SR1_BTF)));
 		/* Read Data from DR register */
 		pTxBuffer[i] = pI2Cx->DR;
 		}
@@ -201,7 +205,7 @@ void I2C_voidMasterReceiveData(u8 I2Cx, u8 * pTxBuffer, u8 Len, u8 SlaveAdd)
 		I2C_VOID_SEND_STOP_CONDITION(pI2Cx);
 
 		/* Check if data register is not empty (RxNE bit in SR1 register = 1) */
-		while(! GET_BIT(pI2Cx->SR1, I2C_SR1_RXNE));
+		while( (! GET_BIT(pI2Cx->SR1, I2C_SR1_RXNE)) && (! GET_BIT(pI2Cx->SR1, I2C_SR1_BTF)));
 
 		/* Read Data from DR register */
 		pTxBuffer[Len-1] = pI2Cx->DR;
